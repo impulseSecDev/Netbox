@@ -10,7 +10,6 @@
       ./fail2ban.nix
       ./suricata.nix
       ./netbox.nix
-      ./homepage.nix
     ];
 
   fileSystems."/boot/firmware".options = lib.mkForce [ "noatime" "nofail" ];
