@@ -20,7 +20,7 @@
     enable = true;
     secretKeyFile = config.sops.secrets."netbox_secret_key".path;
     apiTokenPeppersFile = config.sops.templates."netbox-api-pepper".path;
-    listenAddress = "127.0.0.1";
+    listenAddress = "127.1.0.1";
     port = 8001;
     settings = {
       ALLOWED_HOSTS = [ "netbox.mesh.loranjennings.com" "127.0.0.1" "localhost" ];

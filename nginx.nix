@@ -76,9 +76,22 @@
         listen = [ { addr = "100.64.0.10"; port = 443; ssl = true; } ];
         locations = {
           "/" = {
-            proxyPass = "http://127.0.0.1:8001";
+            proxyPass = "http://127.1.0.1:8001";
             extraConfig = ''
               proxy_read_timeout 300s;
+            '';
+          };
+          "/static/" = { alias = "${config.services.netbox.dataDir}/static/"; };
+        };
+      };
+      "draw.mesh.loranjennings.com" = {
+        useACMEHost = "mesh.loranjennings.com";
+        forceSSL = true;
+        listen = [ { addr = "100.64.0.10"; port = 443; ssl = true; } ];
+        locations = {
+          "/" = {
+            proxyPass = "http://127.2.0.1:8080";
+            extraConfig = ''
             '';
           };
           "/static/" = { alias = "${config.services.netbox.dataDir}/static/"; };
