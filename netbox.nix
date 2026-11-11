@@ -16,21 +16,6 @@
     mode = "0400";
   };
 
-  nixpkgs.overlays = [
-    (final: prev: {
-      pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
-        (pyFinal: pyPrev: {
-          cross-web = pyPrev.cross-web.overridePythonAttrs (old: {
-            disabledTests = (old.disabledTests or [ ]) ++ [
-              "test_starlette_adapter"
-              "test_starlette_adapter_form_data"
-            ];
-          });
-        })
-      ];
-    })
-  ];
-
   services.netbox = {
     enable = true;
     secretKeyFile = config.sops.secrets."netbox_secret_key".path;
