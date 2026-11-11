@@ -16,6 +16,21 @@
     mode = "0400";
   };
 
+  nixpkgs.overlays = [
+    (final: prev: {
+      pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+        (pyFinal: pyPrev: {
+          cross-web = pyPrev.cross-web.overridePythonAttrs (old: {
+            disabledTests = (old.disabledTests or [ ]) ++ [
+              "test_starlette_adapter"
+              "test_starlette_adapter_form_data"
+            ];
+          });
+        })
+      ];
+    })
+  ];
+
   services.netbox = {
     enable = true;
     secretKeyFile = config.sops.secrets."netbox_secret_key".path;
@@ -23,7 +38,7 @@
     listenAddress = "127.1.0.1";
     port = 8001;
     settings = {
-      ALLOWED_HOSTS = [ "netbox.mesh.loranjennings.com" "127.0.0.1" "localhost" ];
+      ALLOWED_HOSTS = [ "netbox.mesh.loranjennings.com" "127.1.0.1" "localhost" ];
       CSRF_TRUSTED_ORIGINS = [ "https://netbox.mesh.loranjennings.com" ];
     };
   };
